@@ -1,0 +1,23 @@
+# Wavefront MTL file
+# Creator: Ultimate Unwrap3D v2.36
+# Time: Tue Apr 01 13:20:26 2008
+# num_materials: 2
+
+newmtl def_surf_mat
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+Ns 1.000000
+map_Kd deadtree1.jpg
+
+newmtl material25
+Ka 0.000000 0.000000 0.000000
+Kd 0.988235 0.996078 1.000000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+Ns 1.000000
+
+# num_materials: 2

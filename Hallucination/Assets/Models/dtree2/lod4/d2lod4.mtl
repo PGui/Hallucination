@@ -1,0 +1,15 @@
+# Wavefront MTL file
+# Creator: Ultimate Unwrap3D v2.39
+# Time: Thu May 15 22:11:34 2008
+# num_materials: 1
+
+newmtl dtree2
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+d 1.000000
+illum 2
+Ns 1.000000
+map_Kd d2lod3.jpg
+
+# num_materials: 1

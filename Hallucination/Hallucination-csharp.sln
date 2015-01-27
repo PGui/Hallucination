@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{AB478D5B-97A3-9A8D-D0BA-A23029A4D505}") = "Hallucination", "Assembly-CSharp-firstpass-vs.csproj", "{CE9E2D53-6FE9-4FC8-EE38-53BAB1669971}"
 EndProject
+Project("{AB478D5B-97A3-9A8D-D0BA-A23029A4D505}") = "Hallucination", "Assembly-CSharp-vs.csproj", "{ABECDB44-145F-24D8-3C60-0F94C2BA3C59}"
+EndProject
 Project("{AB478D5B-97A3-9A8D-D0BA-A23029A4D505}") = "Hallucination", "Assembly-CSharp-Editor-vs.csproj", "{C0C4E373-61F9-6516-30B1-671E96CC9A69}"
 EndProject
 Global
@@ -15,6 +17,10 @@ Global
 		{CE9E2D53-6FE9-4FC8-EE38-53BAB1669971}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE9E2D53-6FE9-4FC8-EE38-53BAB1669971}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE9E2D53-6FE9-4FC8-EE38-53BAB1669971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABECDB44-145F-24D8-3C60-0F94C2BA3C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABECDB44-145F-24D8-3C60-0F94C2BA3C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABECDB44-145F-24D8-3C60-0F94C2BA3C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABECDB44-145F-24D8-3C60-0F94C2BA3C59}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0C4E373-61F9-6516-30B1-671E96CC9A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0C4E373-61F9-6516-30B1-671E96CC9A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0C4E373-61F9-6516-30B1-671E96CC9A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -23,7 +29,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-				GlobalSection(MonoDevelopProperties) = preSolution
+																			GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
