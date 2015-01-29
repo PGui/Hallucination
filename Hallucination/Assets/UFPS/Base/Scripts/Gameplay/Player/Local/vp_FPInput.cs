@@ -15,7 +15,6 @@ using System.Collections.Generic;
 
 public class vp_FPInput : vp_Component
 {
-
 	// mouse look
 	public Vector2 MouseLookSensitivity = new Vector2(5.0f, 5.0f);
 	public int MouseLookSmoothSteps = 10;				// allowed range: 1-20
