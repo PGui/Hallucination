@@ -57,7 +57,7 @@ public class TriggerWind : MonoBehaviour {
         if (coll.gameObject.tag == "Player")
         {
             //particles.SetActive(false);
-            //camera.GetComponent<vp_FPCamera>().ShakeSpeed = 1.0f;
+            //camera.GetComponent<vp_FPCamera>().ShakeSpeed = 1.0f; /**/
         }
     }
 }
