@@ -19,7 +19,6 @@ public class TriggerWind : MonoBehaviour {
             if(t.name == "Dust Storm")
             {
                 particles = t.gameObject;
-                Debug.Log("Here");
                 break;
             }
         }
