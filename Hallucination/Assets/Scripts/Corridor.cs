@@ -20,6 +20,7 @@ public class Corridor : MonoBehaviour {
 
     void OnTriggerEnter(Collider _other)
     {
+        /*
         if (_other.CompareTag("Player") && _other.GetComponent<Player>().GetCurrentLocation() != this.transform.GetInstanceID())
         {
             InstantiateChildren();
@@ -29,6 +30,7 @@ public class Corridor : MonoBehaviour {
             }
             _other.GetComponent<Player>().SetCurrentLocation(this.transform.GetInstanceID());
         }
+        */
     }
 
     Corridor InstantiateCorridor(Transform exitPosition)
