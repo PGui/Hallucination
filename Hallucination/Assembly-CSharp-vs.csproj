@@ -67,6 +67,9 @@
      <Compile Include="Assets\Realistic Effects\Scripts\Share\RandomPosition.cs" />
      <Compile Include="Assets\Realistic Effects\Scripts\Share\RandomRotate.cs" />
      <Compile Include="Assets\Realistic Effects\Scripts\Share\UVTextureAnimator.cs" />
+     <Compile Include="Assets\Scripts\Corridor.cs" />
+     <Compile Include="Assets\Scripts\TriggerAberrationChrom.cs" />
+     <Compile Include="Assets\Scripts\TriggerGrow.cs" />
      <Compile Include="Assets\Scripts\TriggerWind.cs" />
      <Compile Include="Assets\UFPS\Base\Scripts\Core\Attributes\vp_FloatFieldAttribute.cs" />
      <Compile Include="Assets\UFPS\Base\Scripts\Core\Attributes\vp_HelpBoxAttribute.cs" />
