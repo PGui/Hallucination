@@ -11,6 +11,8 @@ public class TriggerGrow : MonoBehaviour {
 	// Use this for initialization
     public float GrowingTime = 5.0f;
 
+    public GameObject AudioSourceToPlay;
+
     bool needGrow = false;
     public Vector3 startScale = new Vector3(1.0f, 1.0f, 1.0f);
     public Vector3 endScale = new Vector3(10.0f, 10.0f, 10.0f);
@@ -19,6 +21,8 @@ public class TriggerGrow : MonoBehaviour {
     public Vector3 endPosition = new Vector3(1.0f, 1.0f, 1.0f);
 
     float time = 0.0f;
+
+
 
 	void Start () 
     {
@@ -49,6 +53,7 @@ public class TriggerGrow : MonoBehaviour {
         {
             needGrow = true;
             previousShakeValue = scriptcam.ShakeSpeed;
+            AudioSourceToPlay.GetComponent<AudioSource>().Play();
         }
     }
 
