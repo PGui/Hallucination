@@ -30,7 +30,7 @@ public class TriggerWind : MonoBehaviour {
             if (t.name == "FPSCamera")
             {
                 camera = t.gameObject;
-                Debug.Log("Cam");
+                //Debug.Log("Cam");
                 break;
             }
         }

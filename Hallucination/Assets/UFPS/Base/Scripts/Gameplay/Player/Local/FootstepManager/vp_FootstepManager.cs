@@ -38,6 +38,8 @@ public class vp_FootstepManager : MonoBehaviour
 	static vp_FootstepManager[] m_FootstepManagers;
 	public static bool mIsDirty = true;
 
+    public bool isStepping = false;
+
 	/// <summary>
 	/// Retrieves the list of item databases, finding all instances if necessary.
 	/// </summary>
@@ -102,6 +104,8 @@ public class vp_FootstepManager : MonoBehaviour
 		if (m_Camera.BobStepCallback == null)
 			m_Camera.BobStepCallback += Footstep;
 
+
+        //Debug.Log(isStepping);
 	}
 	
 	
@@ -150,7 +154,8 @@ public class vp_FootstepManager : MonoBehaviour
 			PlaySound( SurfaceTypes[ m_Player.SurfaceType.Get().SurfaceID ] );
 			return;
 		}
-		
+
+        
 		// loop through the surfaces
 		foreach(vp_SurfaceTypes st in SurfaceTypes)
 		{
@@ -166,7 +171,7 @@ public class vp_FootstepManager : MonoBehaviour
 				}
 			}
 		}
-		
+
 	}
 	
 	
@@ -196,6 +201,9 @@ public class vp_FootstepManager : MonoBehaviour
 		m_Audio.pitch = Random.Range(st.RandomPitch.x, st.RandomPitch.y) * Time.timeScale;
 		m_Audio.clip = m_SoundToPlay;
 		m_Audio.Play(); // play the sound
+
+        isStepping = true;
+        
 		m_LastPlayedSound = m_SoundToPlay; // cache this sound
 		
 	}
