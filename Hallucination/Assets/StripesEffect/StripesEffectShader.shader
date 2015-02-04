@@ -19,7 +19,7 @@
 			#pragma glsl
 			#pragma fragmentoption ARB_precision_hint_fastest
 			#pragma exclude_renderers flash
-			//#pragma target 4.0 
+			#pragma target 3.0 
 			#include "UnityCG.cginc"
 
 			float4x4 _FrustumCornersWPos;
