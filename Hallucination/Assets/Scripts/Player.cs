@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        m_currentCorridorInstance = GameObject.Find("Corridor#01Start").GetComponent<Corridor>();
-        m_currentCorridorInstance.m_triggers = m_currentCorridorInstance.GetComponentsInChildren<BoxCollider>();
+        m_currentCorridorInstance = GameObject.Find("666").GetComponent<Corridor>();
+        m_currentCorridorInstance.m_triggers = m_currentCorridorInstance.GetComponentsInChildren<TriggerCorridor>();
         m_currentCorridorInstance.DisableTriggers();
         m_currentCorridor = m_currentCorridorInstance.GetInstanceID();
     }

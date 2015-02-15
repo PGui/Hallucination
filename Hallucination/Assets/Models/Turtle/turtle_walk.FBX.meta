@@ -1,0 +1,560 @@
+fileFormatVersion: 2
+guid: aa7e8be03ba156b41a1ed39b8ae0aa72
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Bone002
+    100002: Bone002(mirrored)
+    100004: Bone004
+    100006: Bone004(mirrored)
+    100008: Bone005
+    100010: Bone005(mirrored)
+    100012: Bone006
+    100014: Bone006(mirrored)
+    100016: Bone007
+    100018: Bone007(mirrored)
+    100020: Bone008
+    100022: Bone008(mirrored)
+    100024: Bone011
+    100026: Bone012
+    100028: Bone015
+    100030: Box001
+    100032: Head
+    100034: LeftFoot
+    100036: LeftHand
+    100038: RightFoot
+    100040: RightHand
+    100042: Spine
+    100044: Tail
+    100046: //RootNode
+    400000: Bone002
+    400002: Bone002(mirrored)
+    400004: Bone004
+    400006: Bone004(mirrored)
+    400008: Bone005
+    400010: Bone005(mirrored)
+    400012: Bone006
+    400014: Bone006(mirrored)
+    400016: Bone007
+    400018: Bone007(mirrored)
+    400020: Bone008
+    400022: Bone008(mirrored)
+    400024: Bone011
+    400026: Bone012
+    400028: Bone015
+    400030: Box001
+    400032: Head
+    400034: LeftFoot
+    400036: LeftHand
+    400038: RightFoot
+    400040: RightHand
+    400042: Spine
+    400044: Tail
+    400046: //RootNode
+    4300000: Box001
+    7400000: Up
+    7400002: Walk
+    7400004: UpTurnHead
+    7400006: UpIdle
+    7400008: Down
+    7400010: Idle
+    9500000: //RootNode
+    13700000: Box001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walk
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 80
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Box001
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/Head/Bone011
+        weight: 1
+      - path: Spine/Head/Bone011/Bone012
+        weight: 1
+      - path: Spine/LeftFoot
+        weight: 1
+      - path: Spine/LeftFoot/Bone002
+        weight: 1
+      - path: Spine/LeftFoot/Bone002/Bone008
+        weight: 1
+      - path: Spine/LeftHand
+        weight: 1
+      - path: Spine/LeftHand/Bone004
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: Spine/RightFoot
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)/Bone008(mirrored)
+        weight: 1
+      - path: Spine/RightHand
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Spine/Tail
+        weight: 1
+      - path: Spine/Tail/Bone015
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Up
+      takeName: Take 001
+      firstFrame: 81
+      lastFrame: 155
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Box001
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/Head/Bone011
+        weight: 1
+      - path: Spine/Head/Bone011/Bone012
+        weight: 1
+      - path: Spine/LeftFoot
+        weight: 1
+      - path: Spine/LeftFoot/Bone002
+        weight: 1
+      - path: Spine/LeftFoot/Bone002/Bone008
+        weight: 1
+      - path: Spine/LeftHand
+        weight: 1
+      - path: Spine/LeftHand/Bone004
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: Spine/RightFoot
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)/Bone008(mirrored)
+        weight: 1
+      - path: Spine/RightHand
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Spine/Tail
+        weight: 1
+      - path: Spine/Tail/Bone015
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: UpTurnHead
+      takeName: Take 001
+      firstFrame: 156
+      lastFrame: 249
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Box001
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/Head/Bone011
+        weight: 1
+      - path: Spine/Head/Bone011/Bone012
+        weight: 1
+      - path: Spine/LeftFoot
+        weight: 1
+      - path: Spine/LeftFoot/Bone002
+        weight: 1
+      - path: Spine/LeftFoot/Bone002/Bone008
+        weight: 1
+      - path: Spine/LeftHand
+        weight: 1
+      - path: Spine/LeftHand/Bone004
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: Spine/RightFoot
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)/Bone008(mirrored)
+        weight: 1
+      - path: Spine/RightHand
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Spine/Tail
+        weight: 1
+      - path: Spine/Tail/Bone015
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: UpIdle
+      takeName: Take 001
+      firstFrame: 250
+      lastFrame: 350
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Box001
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/Head/Bone011
+        weight: 1
+      - path: Spine/Head/Bone011/Bone012
+        weight: 1
+      - path: Spine/LeftFoot
+        weight: 1
+      - path: Spine/LeftFoot/Bone002
+        weight: 1
+      - path: Spine/LeftFoot/Bone002/Bone008
+        weight: 1
+      - path: Spine/LeftHand
+        weight: 1
+      - path: Spine/LeftHand/Bone004
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: Spine/RightFoot
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)/Bone008(mirrored)
+        weight: 1
+      - path: Spine/RightHand
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Spine/Tail
+        weight: 1
+      - path: Spine/Tail/Bone015
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Down
+      takeName: Take 001
+      firstFrame: 351
+      lastFrame: 470
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Box001
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/Head/Bone011
+        weight: 1
+      - path: Spine/Head/Bone011/Bone012
+        weight: 1
+      - path: Spine/LeftFoot
+        weight: 1
+      - path: Spine/LeftFoot/Bone002
+        weight: 1
+      - path: Spine/LeftFoot/Bone002/Bone008
+        weight: 1
+      - path: Spine/LeftHand
+        weight: 1
+      - path: Spine/LeftHand/Bone004
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: Spine/RightFoot
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)/Bone008(mirrored)
+        weight: 1
+      - path: Spine/RightHand
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Spine/Tail
+        weight: 1
+      - path: Spine/Tail/Bone015
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 471
+      lastFrame: 600
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Box001
+        weight: 1
+      - path: Spine
+        weight: 1
+      - path: Spine/Head
+        weight: 1
+      - path: Spine/Head/Bone011
+        weight: 1
+      - path: Spine/Head/Bone011/Bone012
+        weight: 1
+      - path: Spine/LeftFoot
+        weight: 1
+      - path: Spine/LeftFoot/Bone002
+        weight: 1
+      - path: Spine/LeftFoot/Bone002/Bone008
+        weight: 1
+      - path: Spine/LeftHand
+        weight: 1
+      - path: Spine/LeftHand/Bone004
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006
+        weight: 1
+      - path: Spine/LeftHand/Bone004/Bone005/Bone006/Bone007
+        weight: 1
+      - path: Spine/RightFoot
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)
+        weight: 1
+      - path: Spine/RightFoot/Bone002(mirrored)/Bone008(mirrored)
+        weight: 1
+      - path: Spine/RightHand
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)
+        weight: 1
+      - path: Spine/RightHand/Bone004(mirrored)/Bone005(mirrored)/Bone006(mirrored)/Bone007(mirrored)
+        weight: 1
+      - path: Spine/Tail
+        weight: 1
+      - path: Spine/Tail/Bone015
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 

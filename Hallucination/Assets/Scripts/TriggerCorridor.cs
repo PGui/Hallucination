@@ -13,7 +13,7 @@ public class TriggerCorridor : MonoBehaviour
     {
         if (enabled)
         {
-            m_Corridor.OnChildTriggered(_other);
+            m_Corridor.OnChildTriggered(_other, this);
         }
     }
 }
