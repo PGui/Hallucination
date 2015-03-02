@@ -99,7 +99,7 @@ public class TurtleAnims : MonoBehaviour {
            // time += Time.deltaTime;
             this.transform.parent.transform.position += new Vector3(speedCoeff * Time.deltaTime, speedCoeff*0.5f * Time.deltaTime,0f);
         }
-        Debug.Log(m_canTurnHead +" - "+ myAnim.GetBool("isUp"));
+       // Debug.Log(m_canTurnHead +" - "+ myAnim.GetBool("isUp"));
         if (m_canTurnHead && (myAnim.GetBool("isUp") || myAnim.GetBool("isUpIdle")))
         {
             StartCoroutine("UpTurnHead");
