@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
     public int m_currentCorridor = -1;
     public Corridor m_currentCorridorInstance;
     public int m_creationLimit = 5;
-    public static int m_creationCounter = 0;
+    public int m_creationCounter = 0;
 
     void Start()
     {
@@ -14,6 +14,17 @@ public class Player : MonoBehaviour
         m_currentCorridorInstance.m_triggers = m_currentCorridorInstance.GetComponentsInChildren<TriggerCorridor>();
         m_currentCorridorInstance.DisableTriggers();
         m_currentCorridor = m_currentCorridorInstance.GetInstanceID();
+    }
+    void Update()
+    {
+        if (Input.GetKeyUp("y"))
+        {
+            Debug.Log(ObjectPool.instance._matrix.Count);
+            foreach (ObjectPool.GridElement _t in ObjectPool.instance._matrix)
+            {
+                Debug.Log(_t.mToString());
+            }
+        }
     }
     public int GetCurrentLocation()
     {

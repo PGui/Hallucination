@@ -14,9 +14,9 @@ public class SandExplosion : MonoBehaviour {
     public void reset()
     {
         rigidbody.AddForce(0f, 0f, 0f);
-        rigidbody.isKinematic = true;
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
+        rigidbody.isKinematic = true;
         //rigidbody.mass = 0;
         rigidbody.useGravity = false;
         this.transform.position = m_initPosition;
@@ -35,7 +35,7 @@ public class SandExplosion : MonoBehaviour {
     IEnumerator inverse()
     {
         float randomt = Random.Range(0.3f,1f);
-        Debug.Log(randomt);
+       // Debug.Log(randomt);
         yield return new WaitForSeconds(m_timeBeforeFall + randomt);
         test = true;
     }

@@ -14,23 +14,38 @@ public class Corridor : MonoBehaviour {
     private int randomCorridorID; //Select the shape of the corridor (I, L, T, +)
     private int randomAnchorID;
     private Player m_player;
-    public bool m_entered = false;
+    public int instanceID=0;
+    public bool m_entered = false, m_available = true, m_firstLoop = true;
+    public BoxCorridor m_boxCorridor;
+    public int m_xGridPos, m_yGridPos;
+
+    private BoxCollider col;
 
     public TypeCorridor m_typeCorridor;
     public enum TypeCorridor
     {
-        Line,
-        Ankle,
-        Triple,
-        Cross
+        Line = 0,
+        Ankle = 1,
+        Triple = 2,
+        Cross = 3
     }
-
-	void Start () {
-        initArrays();
+    void Start()
+    {
+        if (instanceID == 0)
+        {
+            instanceID = GetInstanceID();
+            initArrays();
+        }
+        m_boxCorridor = GetComponentInChildren<BoxCorridor>();
+        m_boxCorridor.m_instanceID = instanceID;
         m_player = GameObject.Find("Player").GetComponent<Player>();
-	}
+
+        col = (BoxCollider)this.m_exitPositions[0].collider;
+    }
     void initArrays()
     {
+
+      //  Debug.Log(this.name+" initArrays");
         m_children = new Corridor[m_nbExit];
         m_triggers = new TriggerCorridor[m_nbExit];
         for (int i = 0; i < m_nbExit; i++)
@@ -41,127 +56,159 @@ public class Corridor : MonoBehaviour {
     }
     public void OnChildTriggered(Collider _other, TriggerCorridor _triggered)
     {
+        //If player enters a new corridor
         if (_other.CompareTag("Player") && _other.GetComponent<Player>().GetCurrentLocation() != this.transform.GetInstanceID())
         {
-          //  if (_triggered != m_children[0])
-            Player.m_creationCounter = 0;
-            StartCoroutine("InstantiateChildren", _other.GetComponent<Player>().GetCurrentCorridor());//InstantiateChildren(/*_other.GetComponent<Player>().GetCurrentCorridor()*/);
+            m_player.m_creationCounter = 0; //number of child created (limitation to avoid too big/infinite corridors)
+            instantiateChildren(_other.GetComponent<Player>().GetCurrentCorridor());
             m_entered = true;
-                m_player.SetCurrentLocation(this.transform.GetInstanceID(), this);
-                if (m_player.GetCurrentCorridor().m_typeCorridor == TypeCorridor.Ankle && m_player.GetCurrentCorridor().name != "666")
-                {
-                    m_entered = false;
-                    //for (int i = 0; i < m_nbExit; i++)
-                    //{
-                    if (m_children[0] != m_player.GetCurrentCorridor() && m_children[0] != null)
-                    {
-                        StartCoroutine("PropagateDeallocation", m_children[0]);
-                        StartCoroutine(InstantiateChildrenReverse(this, _triggered != m_children[0]));
-                    }
-                    //}
-                }
-        }
-    }
-    Transform reverseAngle(Transform _toRevese)
-    {
-        if (_toRevese.eulerAngles.y == 180)
-        {
-            _toRevese.eulerAngles = new Vector3(_toRevese.eulerAngles.x, 0f, _toRevese.eulerAngles.z);
-        }
-        else if (_toRevese.eulerAngles.y == 90)
-        {
-            _toRevese.eulerAngles = new Vector3(_toRevese.eulerAngles.x, 270f, _toRevese.eulerAngles.z);
-        }
-        if (_toRevese.eulerAngles.y == 0)
-        {
-            _toRevese.eulerAngles = new Vector3(_toRevese.eulerAngles.x, 180f, _toRevese.eulerAngles.z);
-        }
-        else if (_toRevese.eulerAngles.y == 270)
-        {
-            _toRevese.eulerAngles = new Vector3(_toRevese.eulerAngles.x, 90f, _toRevese.eulerAngles.z);
-        }
-        return _toRevese;
-    }
-    IEnumerator InstantiateChildrenReverse(Corridor previous, bool firstLoop = false)
-    {
-        yield return new WaitForSeconds(1f);
-       // Debug.Log("Je vais créer tes fils dans l'autre sens !");
-        for (int i = 0; i < 1/*previous.m_nbExit*/; i++)
-        {
-            //Debug.Log(this.name + i + /*previous.name +*/ " - " + (m_children[i] == null)); //Debug current corridor name and if current child is null
-            if (m_children[i] == null)
+            m_player.SetCurrentLocation(this.instanceID, this);
+            if (m_player.GetCurrentCorridor().m_typeCorridor == TypeCorridor.Ankle && m_player.GetCurrentCorridor().name != "666")
             {
-                // Debug.Log(this.name + i /*+ previous.name*/);
-                Player.m_creationCounter++;
-                Transform test = m_exitPositions[i];
-                if (firstLoop)
+                int i = 0;
+                for (i = 0; i < m_nbExit; i++)
                 {
-                   test = reverseAngle(test);
+                    if (_triggered == m_exitPositions[i].GetComponent<TriggerCorridor>())
+                    {
+                        break;
+                    }
                 }
-                RandomCorridor2 = InstantiateCorridor(m_exitPositions[i]); //RandomCorridor = the new instantiated Corridor
-                m_exitPositions[i].eulerAngles = new Vector3(m_exitPositions[i].eulerAngles.x, 0f, m_exitPositions[i].eulerAngles.z);
-                //    m_corridorManager.AddNewCorridor(RandomCorridor2);
-                RandomCorridor2.initArrays(); //Init new corridor arrays
-                // Debug.Log("Adding : " + RandomCorridor.name + " to " + this.name + "children[" + i + "]");
-                m_children[i] = RandomCorridor2; //The random Corridor is one of the corridor's child
-                //Debug.Log("ADDED" + m_children[i].name);
-                //      test.Add(RandomCorridor2.name);
-                if (RandomCorridor2.m_typeCorridor != TypeCorridor.Ankle)
+                //If the entered corridor is an Ankle
+                m_entered = false;
+                if (m_children[i] != m_player.GetCurrentCorridor() && m_children[i] != null)
                 {
-                    //If the new corridor is not an ankle
-                    yield return new WaitForSeconds(0.01f);
-                    // Debug.Log(Player.m_creationCounter + " >? " + m_player.m_creationLimit);
-                    m_children[i].StartCoroutine(InstantiateChildrenReverse(this, false)); //.InstantiateChildren(); //Instantiate a new child.
-                    // m_children[i].SendMessage("InstantiateChildren");
+                    propagateDeallocationV2(m_children[i]);
+                    m_children[i] = null;
+                    instantiateChildrenReverse();
                 }
             }
-            //   m_children[i].m_children[m_nbExit-1] = this; //Add preious corridor as a child too
         }
-        //PRESQUE
-        yield return new WaitForSeconds(0.1f);
-        Player.m_creationCounter = 0;
-        m_children[0].StartCoroutine("InstantiateChildren", m_player.GetCurrentCorridor());
-        // Debug.Log(this.name + " lol "+ test[0]);
-        // this.m_children[0] = GameObject.Find("" + test[0] + "").GetComponent<Corridor>();
     }
-
-    /*** Check all Corridor Children and instantiate one for each exit ***/
-    IEnumerator InstantiateChildren(Corridor previous)
+    public void poolPosition()
     {
-        Debug.Log("CHILD");
-       // previous need to be set as a child, equivalent to AddExit function...to do later
-        if (m_children[0] == null)
+        this.openExits(this);
+        this.m_available = true;
+        if (this.m_firstLoop==false)
         {
-            m_children[0] = previous;
+            this.m_exitPositions[0].eulerAngles += new Vector3(0, 180, 0);
+            col.center = new Vector3(col.center.x, col.center.y, col.center.z + 1f);
+            this.m_firstLoop = true;
         }
+        this.m_boxCorridor.collider.enabled = false;
+        this.transform.position = new Vector3(0f, -20f, 0f);
+        this.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+    }
+    public bool checkPositionAvailable(int x, int y)
+    {
+        //Debug.Log("Grid search at " + x + " - " + y);
+        for (int i = 0; i < ObjectPool.instance._matrix.Count; i++)
+        {
+            if (x == ObjectPool.instance._matrix[i].m_x && y == ObjectPool.instance._matrix[i].m_y)
+            {
+                return false;
+            }
+            //Debug.Log(ObjectPool.instance._matrix[i].mToString());
+        }
+        return true;
+    }
+    public void addToGrid(int x, int y, int _type)
+    {
+        ObjectPool.instance._matrix.Add(new ObjectPool.GridElement { m_x = x, m_y = y, m_type = _type });
+    }
+    public void removeFromGrid(int _xGrid, int _yGrid)
+    {
+        for (int i = 0; i < ObjectPool.instance._matrix.Count; i++)
+        {
+            if (_xGrid == ObjectPool.instance._matrix[i].m_x && _yGrid == ObjectPool.instance._matrix[i].m_y)
+            {
+                ObjectPool.instance._matrix.RemoveAt(i);
+            }
+        }
+    }
+    void propagateDeallocationV2(Corridor toRemove)
+    {
+        if (toRemove.name == "667")
+        {
+            Debug.Log("Hello, I'm 667 to be removed !");
+        }
+        toRemove.removeFromGrid(toRemove.m_xGridPos, toRemove.m_yGridPos);
+        toRemove.poolPosition();
+        toRemove.m_available = true;
+        for (int i = 0; i < toRemove.m_nbExit; i++)
+        {
+            if (toRemove.m_children[i] != null && toRemove.m_children[i] != m_player.GetCurrentCorridor())
+            {
+                //Debug.Log(toRemove.name + " -"+i+"- " + toRemove.m_children[i].instanceID);
+            }
+            if (toRemove.m_children[i] != null && toRemove.m_children[i] != m_player.GetCurrentCorridor() && (Mathf.RoundToInt(toRemove.m_children[i].transform.position.x) != 0 || Mathf.RoundToInt(toRemove.m_children[i].transform.position.y) != -20 || Mathf.RoundToInt(toRemove.m_children[i].transform.position.z) != 0))
+            {
+                propagateDeallocationV2(toRemove.m_children[i]);
+            }
+        }
+        for (int i = 0; i < toRemove.m_nbExit; i++)
+        {
+            if (toRemove.m_children[i] != null && toRemove.m_children[i] != m_player.GetCurrentCorridor())
+            {
+                //Debug.Log("Byebye" + m_children[i].name);
+                toRemove.m_children[i] = null;
+            }
+        }
+    }
+    void instantiateChildren(Corridor previous)
+    {
+        m_children[0] = previous;
 
+        for (int i = 1; i < m_nbExit; i++)
+        {
+            if (m_children[i] == null && m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/)
+            {
+                m_children[i] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(this), false).GetComponent<Corridor>(), this, i);
+            }
+        }
+    }
+    void instantiateChildrenReverse()
+    {
+        //Debug.Log("Par la puissance des fils !");
+       // m_children[0] = previous;
+        if (m_firstLoop)
+        {
+          //  Debug.Log("Reverse exitPosition0");
+            m_exitPositions[0].eulerAngles += new Vector3(0, 180, 0);
+            col.center = new Vector3(col.center.x, col.center.y, col.center.z-1f);
+            m_firstLoop = false;
+        }
         for (int i = 0; i < m_nbExit; i++)
         {
-            if (m_children[i] == null)
+            if (m_children[i] == null && m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/)
             {
-                Player.m_creationCounter++;
-                RandomCorridor = InstantiateCorridor(m_exitPositions[i]); 
-                RandomCorridor.initArrays(); //Init new corridor arrays
-                m_children[i] = RandomCorridor; //The random Corridor is one of the corridor's child
-                if (RandomCorridor.m_typeCorridor != TypeCorridor.Ankle)
-                {
-                    //If the new corridor is not an ankle
-                    yield return new WaitForSeconds(0.01f);
-                    if (m_children[i] != null)
-                    {
-                        m_children[i].StartCoroutine("InstantiateChildren", this);
-                    }
-                }
+               // Debug.Log("This is the birth of a new son");
+                m_children[i] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(this), false).GetComponent<Corridor>(), this, i);
             }
-         //   m_children[i].m_children[m_nbExit-1] = this; //Add preious corridor as a child too
+            else
+            {
+                //Debug.Log("lol");
+                //Debug.Log(m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/);
+                //Debug.Log(m_children[i] == null);
+                //Debug.Log(m_children[i].name + " " + m_children[i].instanceID);
+            }
         }
     }
-    Corridor InstantiateCorridor(Transform exitPosition)
+    string randomObjName(Corridor previous)
     {
         randomCorridorID = (int)Random.Range(0, 4); //Select the shape of the corridor (I, L, T, +)
-
-        //Avoir unlimited corridor, if counter > limit, force creating an ankle
-        if (Player.m_creationCounter > m_player.m_creationLimit)
+       // m_player.m_creationCounter++;
+        //Debug.Log(m_player.m_creationCounter);
+       /* if (randomCorridorID == previous.randomCorridorID)
+        {
+            randomCorridorID--;
+            if (randomCorridorID < 0) randomCorridorID = 0;
+        }*/
+       /* while (randomCorridorID == previous.randomCorridorID)
+        {
+            Debug.Log("rerand");
+            randomCorridorID = (int)Random.Range(0, 4); //Select the shape of the corridor (I, L, T, +)
+        }*/
+        if (m_player.m_creationCounter > m_player.m_creationLimit)
         {
             randomCorridorID = 1;
         }
@@ -181,20 +228,89 @@ public class Corridor : MonoBehaviour {
                 randomAnchorID = 0;
                 break;
         }
-
-        tempCorridor = GameObject.Instantiate(Resources.Load("Prefab/Corridor#" + randomCorridorID.ToString() + randomAnchorID.ToString())) as GameObject;
-
-        //Rotate the corridor
-        tempCorridor.transform.localEulerAngles = new Vector3(Mathf.Round(tempCorridor.GetComponent<Corridor>().m_exitPositions[0].localEulerAngles.x + exitPosition.eulerAngles.x), Mathf.Round(tempCorridor.GetComponent<Corridor>().m_exitPositions[0].localEulerAngles.y + exitPosition.eulerAngles.y), Mathf.Round(tempCorridor.GetComponent<Corridor>().m_exitPositions[0].localEulerAngles.z + exitPosition.eulerAngles.z));
-        
-        //Place the corridor
-        tempCorridor.transform.position = new Vector3(exitPosition.position.x, exitPosition.position.y, exitPosition.position.z);
-
-        //Rename the corridor with InstanceID so that they have different names
-        tempCorridor.name = tempCorridor.GetInstanceID().ToString();
-
-        return tempCorridor.GetComponent<Corridor>();
+        return "Corridor#" + randomCorridorID.ToString() + randomAnchorID.ToString();
     }
+    Corridor setPoolObjActive(Corridor _moved, Corridor _parent, int _exitID)
+    {
+        m_player.m_creationCounter++;
+       // Debug.Log(_moved.instanceID+"-"+_moved.name);
+        //  Corridor _moved;
+       // _moved = ObjectPool.instance.GetObjectForType(randomObjName(_parent), false).GetComponent<Corridor>();
+        if (_moved == null) return null;
+
+        if (_moved != null && _moved.m_nbExit > 0)
+        {
+            if (_moved.m_boxCorridor == null)
+            {
+                _moved.m_boxCorridor = _moved.GetComponentInChildren<BoxCorridor>();
+            } 
+            if (_moved.m_boxCorridor != null)
+            {
+                _moved.m_boxCorridor.collider.enabled = true;
+            }
+            if (_parent != null)
+            {
+                _moved.m_children[0] = _parent;
+            }
+
+            _moved.m_xGridPos = _parent.m_xGridPos;
+            _moved.m_yGridPos = _parent.m_yGridPos;
+            //Debug.Log("3 :" + _moved.m_xGridPos + " " + _moved.m_yGridPos);
+            if (Mathf.RoundToInt(_parent.m_exitPositions[_exitID].eulerAngles.y) == 0)
+            {
+                _moved.m_yGridPos++;
+            }
+            else if (Mathf.RoundToInt(_parent.m_exitPositions[_exitID].eulerAngles.y) == 180)
+            {
+                _moved.m_yGridPos--;
+            }
+            else if (Mathf.RoundToInt(_parent.m_exitPositions[_exitID].eulerAngles.y) == 90)
+            {
+                _moved.m_xGridPos++;
+            }
+            else if (Mathf.RoundToInt(_parent.m_exitPositions[_exitID].eulerAngles.y) == -90 || Mathf.RoundToInt(_parent.m_exitPositions[_exitID].eulerAngles.y) == 270)
+            {
+                _moved.m_xGridPos--;
+            }
+           // Debug.Log("3.5" + _moved.m_xGridPos + " " + _moved.m_yGridPos);
+            if (checkPositionAvailable(_moved.m_xGridPos, _moved.m_yGridPos))
+            {
+                addToGrid(_moved.m_xGridPos, _moved.m_yGridPos, _moved.m_typeCorridor.GetHashCode());
+                _moved.m_available = false;
+                //Place the corridor
+                //Debug.Log(_moved.transform.position.ToString());
+                _moved.transform.localEulerAngles = new Vector3(Mathf.RoundToInt(_moved.m_exitPositions[0].localEulerAngles.x + _parent.m_exitPositions[_exitID].eulerAngles.x),
+                    Mathf.RoundToInt(_moved.m_exitPositions[0].localEulerAngles.y + _parent.m_exitPositions[_exitID].eulerAngles.y),
+                    Mathf.RoundToInt(_moved.m_exitPositions[0].localEulerAngles.z + _parent.m_exitPositions[_exitID].eulerAngles.z));
+                _moved.transform.position = new Vector3(Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.x), Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.y), Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.z));
+                
+                //VERIF si collision
+                if (_moved.m_typeCorridor != TypeCorridor.Ankle)
+                {
+                    for (int j = 0; j < _moved.m_nbExit; j++)
+                    {
+                        if (_moved.m_children[j] == null && _moved.m_exitPositions[j].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/)
+                        {//VERIF si collision
+                            _moved.m_children[j] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(_parent), false).GetComponent<Corridor>(), _moved, j);
+                        }
+                    }
+                } 
+                //Debug.Log(_moved.transform.position.ToString());
+                return _moved;
+            }
+           // else
+            //{
+               // return null;
+            //}
+        }
+        //else
+        //{
+       // Debug.Log("toClose ID : " + _parent.instanceID + " - exit : " + _exitID);
+        return _parent.closeExit(_parent, _exitID);
+         //   return null;
+        //}
+    }
+
     public void EnableTriggers()
     {
         for (int i = 0; i < m_nbExit; i++)
@@ -215,42 +331,26 @@ public class Corridor : MonoBehaviour {
             }
         }
     }
-    IEnumerator PropagateDeallocation(Corridor parent)
+    public Corridor closeExit(Corridor toClose, int idToClose)
     {
-        for (int i = 0; i < parent.m_nbExit; i++)
+        if (toClose != null /*&& toClose.m_children[idToClose] != null*/)
         {
-            if (parent.m_children[i] != parent && parent.m_children[i] != null && parent.m_children[i] != m_player.GetCurrentCorridor())
-            {
-                yield return new WaitForSeconds(0.05f + i * 0.1f);
-                StartCoroutine("PropagateDeallocation", parent.m_children[i]);
-            }
+            Debug.Log("toClose ID : " + toClose.instanceID + " - exit : " + idToClose);
+            toClose.m_exitPositions[idToClose].GetComponent<TriggerCorridor>().m_planeCol.enabled = true/*.GetComponentInChildren<MeshCollider>().enabled = true*/;
+            toClose.m_exitPositions[idToClose].GetComponent<TriggerCorridor>().m_planeRend.enabled = true/*.GetComponentInChildren<MeshRenderer>().enabled = true*/;
         }
-        if (parent != null)
-        {
-            Destroy(parent.gameObject);
-        }
+        return null;
     }
-
-    void AddExit(Corridor corridor)
+    public void openExits(Corridor toOpen)
     {
-       /* bool result = false;
-
-        for (int i = 0; i < m_nbExit; i++)
+        //Debug.Log("toOpen ID : " + toOpen.instanceID);
+        for (int i = 0; i < toOpen.m_nbExit; i++) //(Corridor _child in temp_parent.m_children)
         {
-            Debug.Log(i);
-            if (m_children[i] != null)
+            if (toOpen.m_children[i] != null)
             {
-                Debug.Log("Test"+i);
-                m_children[i] = corridor;
-                result = true;
-                break;
+                toOpen.m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeCol.enabled = false/*.GetComponentInChildren<MeshCollider>().enabled = false*/;
+                toOpen.m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled = false/*.GetComponentInChildren<MeshRenderer>().enabled = false*/;
             }
         }
-
-        if (!result)
-        {
-            Debug.Log("Error");
-        }
-        */
     }
 }

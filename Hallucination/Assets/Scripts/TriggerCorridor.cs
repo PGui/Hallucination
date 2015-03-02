@@ -3,6 +3,8 @@
 public class TriggerCorridor : MonoBehaviour
 {
     public Corridor m_Corridor;
+    public MeshCollider m_planeCol;
+    public MeshRenderer m_planeRend;
     public bool m_enabled = true;
 
     void Start()
@@ -13,6 +15,7 @@ public class TriggerCorridor : MonoBehaviour
     {
         if (enabled)
         {
+            //Debug.Log(transform.parent.name + ">" + name + "Triggered");
             m_Corridor.OnChildTriggered(_other, this);
         }
     }

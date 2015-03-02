@@ -21,29 +21,37 @@ public class TriggerExplosion : MonoBehaviour
 	void Update () {
         if (Input.GetKeyDown("e"))
         {
-            for (int i = 0; i < m_sandExplosion.Length; i++)
-            {
-                m_sandExplosion[i].rigidbody.mass = 1;
-                m_sandExplosion[i].rigidbody.useGravity = true;
-                m_sandExplosion[i].rigidbody.isKinematic = false;
-                m_sandExplosion[i].explosion();
-            }
-
-            for (int i = 0; i < m_emitters.Length; i++)
-            {
-                m_emitters[i].gameObject.particleSystem.Play();
-            }
+            startExplosion();
         }
         else if (Input.GetKeyDown("r"))
         {
-            for (int i = 0; i < m_emitters.Length; i++)
-            {
-                m_emitters[i].gameObject.particleSystem.Stop();
-            }
-            for (int i = 0; i < m_sandExplosion.Length; i++)
-            {
-                m_sandExplosion[i].reset();
-            }
+            resetExplosion();
         }
 	}
+    public void startExplosion()
+    {
+        for (int i = 0; i < m_sandExplosion.Length; i++)
+        {
+            m_sandExplosion[i].rigidbody.mass = 1;
+            m_sandExplosion[i].rigidbody.useGravity = true;
+            m_sandExplosion[i].rigidbody.isKinematic = false;
+            m_sandExplosion[i].explosion();
+        }
+
+        for (int i = 0; i < m_emitters.Length; i++)
+        {
+            m_emitters[i].gameObject.particleSystem.Play();
+        }
+    }
+    public void resetExplosion()
+    {
+        for (int i = 0; i < m_emitters.Length; i++)
+        {
+            m_emitters[i].gameObject.particleSystem.Stop();
+        }
+        for (int i = 0; i < m_sandExplosion.Length; i++)
+        {
+            m_sandExplosion[i].reset();
+        }
+    }
 }
