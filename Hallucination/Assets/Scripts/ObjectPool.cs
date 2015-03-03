@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ObjectPool : MonoBehaviour {
    
     public static ObjectPool instance;
+    public int matrixMinX=0, matrixMinY=0, matrixMaxX=0, matrixMaxY=1;
 
     public struct GridElement
     {
@@ -20,7 +21,7 @@ public class ObjectPool : MonoBehaviour {
     public List<GridElement> _matrix = new List<GridElement>()
     {
         {new GridElement{m_x = 0, m_y = 0, m_type = 1}},
-        {new GridElement{m_x = 0, m_y = 1, m_type = 2}}
+        {new GridElement{m_x = 0, m_y = 1, m_type = 10}}
     };
     /*public Dictionary<int, GridElement> _matrix = new Dictionary<int, GridElement>() {
         {0, new GridElement{m_x = 0, m_y = 0, m_type = 1}},

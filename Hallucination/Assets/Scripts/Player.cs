@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Player : MonoBehaviour
@@ -7,6 +8,15 @@ public class Player : MonoBehaviour
     public Corridor m_currentCorridorInstance;
     public int m_creationLimit = 5;
     public int m_creationCounter = 0;
+    public bool m_victoryState = false;
+    public int[] m_victoryPattern;
+    public int m_nbCorridorVictory, m_corridorCollectionCounter;
+    private string m_lineMap = "";
+    public Text m_mapTextArea;
+    private Color m_beginFadeColor = new Color(1, 1, 1, 1), m_endFadeColor = new Color(1, 1, 1, 0);
+
+    private float duration = 1; // This will be your time in seconds.
+    private float smoothness = 0.02f; // This will determine the smoothness of the lerp. Smaller values are smoother. Really it's the time between updates.
 
     void Start()
     {
@@ -14,6 +24,31 @@ public class Player : MonoBehaviour
         m_currentCorridorInstance.m_triggers = m_currentCorridorInstance.GetComponentsInChildren<TriggerCorridor>();
         m_currentCorridorInstance.DisableTriggers();
         m_currentCorridor = m_currentCorridorInstance.GetInstanceID();
+        m_victoryPattern = new int[m_nbCorridorVictory];
+        for (int i = 0; i < m_nbCorridorVictory; i++)
+        {
+            int rand10 = (int)Random.Range(0, 4);
+            int rand1 = 0;
+            switch (rand10)
+            {
+                case 0:
+                    rand1 = (int)Random.Range(0, 2);
+                    break;
+                case 1:
+                    rand1 = (int)Random.Range(0, 2);
+                    break;
+                case 2:
+                    rand1 = (int)Random.Range(0, 3);
+                    break;
+                case 3:
+                    rand1 = 0;
+                    break;
+                case 4:
+                    rand1 = 0;
+                    break;
+            }
+            m_victoryPattern[i] = (rand10*10)+rand1;
+        }
     }
     void Update()
     {
@@ -24,6 +59,10 @@ public class Player : MonoBehaviour
             {
                 Debug.Log(_t.mToString());
             }
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            displayMap();
         }
     }
     public int GetCurrentLocation()
@@ -52,5 +91,71 @@ public class Player : MonoBehaviour
         m_currentCorridor = transformID;
         m_currentCorridorInstance = _corridor;
         m_currentCorridorInstance.DisableTriggers();
+    }
+    public void displayMap()
+    {
+        m_lineMap = "| ";
+        if (m_corridorCollectionCounter == m_nbCorridorVictory)
+        {
+            m_lineMap += "WINNER ";
+        }
+        else
+        {
+            for (int i = 0; i < m_nbCorridorVictory; i++)
+            {
+                if (i == m_corridorCollectionCounter)
+                {
+                    m_lineMap += "->";
+                }
+                if (m_victoryPattern[i] == 0 || m_victoryPattern[i] == 1) m_lineMap += "0";
+
+                m_lineMap += m_victoryPattern[i] + " ";
+            }
+        }
+        m_lineMap += "|\n\n";
+
+        for (int j = ObjectPool.instance.matrixMaxY; j >= ObjectPool.instance.matrixMinY; j--)
+        {
+            m_lineMap += "| ";
+            for (int i = ObjectPool.instance.matrixMinX; i <= ObjectPool.instance.matrixMaxX; i++)
+            {
+                m_lineMap += findTypeAtPos(i, j) + " ";
+            }
+            m_lineMap += "|\n";
+        }
+        m_mapTextArea.text = m_lineMap;
+        StartCoroutine("LerpColor");
+       /* if (m_mapTextArea.color == m_endFadeColor)
+        {
+            m_mapTextArea.color = m_beginFadeColor;
+        }
+        else
+            m_mapTextArea.color = m_endFadeColor;*/
+    }
+    public string findTypeAtPos(int x, int y)
+    {
+        for (int i = 0; i < ObjectPool.instance._matrix.Count; i++)
+        {
+            if (x == ObjectPool.instance._matrix[i].m_x && y == ObjectPool.instance._matrix[i].m_y)
+            {
+                if (ObjectPool.instance._matrix[i].m_type == 0 || ObjectPool.instance._matrix[i].m_type == 1)
+                    return "0"+ObjectPool.instance._matrix[i].m_type.ToString();
+                else 
+                    return ObjectPool.instance._matrix[i].m_type.ToString();
+            }
+        }
+        return "--";
+    }
+    IEnumerator LerpColor()
+    {
+        float progress = 0; //This float will serve as the 3rd parameter of the lerp function.
+        float increment = smoothness / duration; //The amount of change to apply.
+
+        while (progress < 1)
+        {
+            m_mapTextArea.color = Color.Lerp(m_beginFadeColor, m_endFadeColor, progress);
+            progress += increment;
+            yield return new WaitForSeconds(smoothness);
+        }
     }
 }
