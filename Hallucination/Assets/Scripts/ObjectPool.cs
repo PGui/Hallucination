@@ -111,7 +111,8 @@ public class ObjectPool : MonoBehaviour {
                 for (int j = 0; j < bufferAmount; j++)
                 {
                    // if(!pooledObjects[i][j].activeInHierarchy) {
-                    if (Mathf.RoundToInt(pooledObjects[i][j].transform.position.x) == 0 && Mathf.RoundToInt(pooledObjects[i][j].transform.position.z) == 0)
+                   // if (Mathf.RoundToInt(pooledObjects[i][j].transform.position.x) == 0 && Mathf.RoundToInt(pooledObjects[i][j].transform.position.z) == 0)
+                    if (pooledObjects[i][j].GetComponent<Corridor>().m_available)
                     {//.activeInHierarchy) {
                         return pooledObjects[i][j];
                     }

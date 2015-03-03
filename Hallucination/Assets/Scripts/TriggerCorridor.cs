@@ -10,6 +10,8 @@ public class TriggerCorridor : MonoBehaviour
     void Start()
     {
         m_Corridor = transform.parent.GetComponent<Corridor>();
+        m_planeCol.enabled = false;
+        m_planeRend.enabled = false;
     }
     void OnTriggerEnter(Collider _other)
     {

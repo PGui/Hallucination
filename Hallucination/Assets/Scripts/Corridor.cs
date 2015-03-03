@@ -34,7 +34,7 @@ public class Corridor : MonoBehaviour {
         if (instanceID == 0)
         {
             instanceID = GetInstanceID();
-            initArrays();
+            initArrays(this);
         }
         m_boxCorridor = GetComponentInChildren<BoxCorridor>();
         m_boxCorridor.m_instanceID = instanceID;
@@ -42,17 +42,17 @@ public class Corridor : MonoBehaviour {
 
         col = (BoxCollider)this.m_exitPositions[0].collider;
     }
-    void initArrays()
+    void initArrays(Corridor toInit)
     {
 
       //  Debug.Log(this.name+" initArrays");
-        m_children = new Corridor[m_nbExit];
-        m_triggers = new TriggerCorridor[m_nbExit];
+        toInit.m_children = new Corridor[toInit.m_nbExit];
+        toInit.m_triggers = new TriggerCorridor[toInit.m_nbExit];
         for (int i = 0; i < m_nbExit; i++)
         {
-            m_children[i] = null;
+            toInit.m_children[i] = null;
         }
-        m_triggers = this.GetComponentsInChildren<TriggerCorridor>();
+        toInit.m_triggers = this.GetComponentsInChildren<TriggerCorridor>();
     }
     public void OnChildTriggered(Collider _other, TriggerCorridor _triggered)
     {
@@ -78,16 +78,23 @@ public class Corridor : MonoBehaviour {
                 if (m_children[i] != m_player.GetCurrentCorridor() && m_children[i] != null)
                 {
                     propagateDeallocationV2(m_children[i]);
+                    //StartCoroutine("InstChldReverse",i);
                     m_children[i] = null;
                     instantiateChildrenReverse();
                 }
             }
         }
     }
+    IEnumerator InstChldReverse(int _i)
+    {
+        yield return new WaitForSeconds(1);
+        m_children[_i] = null;
+        instantiateChildrenReverse();
+    }
     public void poolPosition()
     {
         this.openExits(this);
-        this.m_available = true;
+       // this.m_available = true;
         if (this.m_firstLoop==false)
         {
             this.m_exitPositions[0].eulerAngles += new Vector3(0, 180, 0);
@@ -105,6 +112,7 @@ public class Corridor : MonoBehaviour {
         {
             if (x == ObjectPool.instance._matrix[i].m_x && y == ObjectPool.instance._matrix[i].m_y)
             {
+               // Debug.Log(ObjectPool.instance._matrix[i].mToString()+" NOT AVAILABLE !!!");
                 return false;
             }
             //Debug.Log(ObjectPool.instance._matrix[i].mToString());
@@ -127,13 +135,8 @@ public class Corridor : MonoBehaviour {
     }
     void propagateDeallocationV2(Corridor toRemove)
     {
-        if (toRemove.name == "667")
-        {
-            Debug.Log("Hello, I'm 667 to be removed !");
-        }
         toRemove.removeFromGrid(toRemove.m_xGridPos, toRemove.m_yGridPos);
         toRemove.poolPosition();
-        toRemove.m_available = true;
         for (int i = 0; i < toRemove.m_nbExit; i++)
         {
             if (toRemove.m_children[i] != null && toRemove.m_children[i] != m_player.GetCurrentCorridor())
@@ -153,16 +156,18 @@ public class Corridor : MonoBehaviour {
                 toRemove.m_children[i] = null;
             }
         }
+        toRemove.initArrays(toRemove);
+        toRemove.m_available = true;
     }
     void instantiateChildren(Corridor previous)
     {
         m_children[0] = previous;
 
-        for (int i = 1; i < m_nbExit; i++)
+        for (int i = 0; i < m_nbExit; i++)
         {
             if (m_children[i] == null && m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/)
             {
-                m_children[i] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(this), false).GetComponent<Corridor>(), this, i);
+                m_children[i] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(this), false).GetComponent<Corridor>(), this, i/*, false*/);
             }
         }
     }
@@ -182,7 +187,7 @@ public class Corridor : MonoBehaviour {
             if (m_children[i] == null && m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/)
             {
                // Debug.Log("This is the birth of a new son");
-                m_children[i] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(this), false).GetComponent<Corridor>(), this, i);
+                m_children[i] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(this), false).GetComponent<Corridor>(), this, i/*, true*/);
             }
             else
             {
@@ -195,7 +200,7 @@ public class Corridor : MonoBehaviour {
     }
     string randomObjName(Corridor previous)
     {
-        randomCorridorID = (int)Random.Range(0, 4); //Select the shape of the corridor (I, L, T, +)
+        randomCorridorID = (int)Random.Range(2, 3); //Select the shape of the corridor (I, L, T, +)
        // m_player.m_creationCounter++;
         //Debug.Log(m_player.m_creationCounter);
        /* if (randomCorridorID == previous.randomCorridorID)
@@ -230,15 +235,23 @@ public class Corridor : MonoBehaviour {
         }
         return "Corridor#" + randomCorridorID.ToString() + randomAnchorID.ToString();
     }
-    Corridor setPoolObjActive(Corridor _moved, Corridor _parent, int _exitID)
+    Corridor setPoolObjActive(Corridor _moved, Corridor _parent, int _exitID/*, bool isRealloc*/)
     {
         m_player.m_creationCounter++;
+      /*  if (isRealloc)
+        {
+            Debug.Log("Creation backward de " + _moved.name + ":" + _moved.instanceID + " fils de " + _parent.name + ":" + _parent.instanceID + "->sortie #" + _exitID);
+        }
+        else
+        {
+            Debug.Log("Creation forward de " + _moved.name + ":" + _moved.instanceID + " fils de " + _parent.name + ":" + _parent.instanceID + "->sortie #" + _exitID);
+        }*/
        // Debug.Log(_moved.instanceID+"-"+_moved.name);
         //  Corridor _moved;
        // _moved = ObjectPool.instance.GetObjectForType(randomObjName(_parent), false).GetComponent<Corridor>();
         if (_moved == null) return null;
 
-        if (_moved != null && _moved.m_nbExit > 0)
+        if (_moved != null /*&& _moved.m_children[0] == null*/ && _moved.m_nbExit > 0)
         {
             if (_moved.m_boxCorridor == null)
             {
@@ -248,8 +261,13 @@ public class Corridor : MonoBehaviour {
             {
                 _moved.m_boxCorridor.collider.enabled = true;
             }
-            if (_parent != null)
+            if (_moved.instanceID == 0)
             {
+                return _parent.closeExit(_parent, _exitID);
+            }
+            if (_parent != null )
+            {
+              //  Debug.Log(_moved.name + "-" + _moved.instanceID);
                 _moved.m_children[0] = _parent;
             }
 
@@ -282,7 +300,9 @@ public class Corridor : MonoBehaviour {
                 _moved.transform.localEulerAngles = new Vector3(Mathf.RoundToInt(_moved.m_exitPositions[0].localEulerAngles.x + _parent.m_exitPositions[_exitID].eulerAngles.x),
                     Mathf.RoundToInt(_moved.m_exitPositions[0].localEulerAngles.y + _parent.m_exitPositions[_exitID].eulerAngles.y),
                     Mathf.RoundToInt(_moved.m_exitPositions[0].localEulerAngles.z + _parent.m_exitPositions[_exitID].eulerAngles.z));
-                _moved.transform.position = new Vector3(Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.x), Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.y), Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.z));
+                _moved.transform.position = new Vector3(Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.x), 
+                    Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.y), 
+                    Mathf.RoundToInt(_parent.m_exitPositions[_exitID].position.z));
                 
                 //VERIF si collision
                 if (_moved.m_typeCorridor != TypeCorridor.Ankle)
@@ -291,7 +311,7 @@ public class Corridor : MonoBehaviour {
                     {
                         if (_moved.m_children[j] == null && _moved.m_exitPositions[j].GetComponent<TriggerCorridor>().m_planeRend.enabled == false/*.GetComponentInChildren<MeshRenderer>().enabled == false*/)
                         {//VERIF si collision
-                            _moved.m_children[j] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(_parent), false).GetComponent<Corridor>(), _moved, j);
+                            _moved.m_children[j] = setPoolObjActive(ObjectPool.instance.GetObjectForType(randomObjName(_parent), false).GetComponent<Corridor>(), _moved, j/*, isRealloc*/);
                         }
                     }
                 } 
@@ -335,7 +355,7 @@ public class Corridor : MonoBehaviour {
     {
         if (toClose != null /*&& toClose.m_children[idToClose] != null*/)
         {
-            Debug.Log("toClose ID : " + toClose.instanceID + " - exit : " + idToClose);
+          //  Debug.Log("toClose ID : " + toClose.instanceID + " - exit : " + idToClose);
             toClose.m_exitPositions[idToClose].GetComponent<TriggerCorridor>().m_planeCol.enabled = true/*.GetComponentInChildren<MeshCollider>().enabled = true*/;
             toClose.m_exitPositions[idToClose].GetComponent<TriggerCorridor>().m_planeRend.enabled = true/*.GetComponentInChildren<MeshRenderer>().enabled = true*/;
         }
@@ -346,7 +366,7 @@ public class Corridor : MonoBehaviour {
         //Debug.Log("toOpen ID : " + toOpen.instanceID);
         for (int i = 0; i < toOpen.m_nbExit; i++) //(Corridor _child in temp_parent.m_children)
         {
-            if (toOpen.m_children[i] != null)
+            if (toOpen.m_exitPositions[i] != null)
             {
                 toOpen.m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeCol.enabled = false/*.GetComponentInChildren<MeshCollider>().enabled = false*/;
                 toOpen.m_exitPositions[i].GetComponent<TriggerCorridor>().m_planeRend.enabled = false/*.GetComponentInChildren<MeshRenderer>().enabled = false*/;
