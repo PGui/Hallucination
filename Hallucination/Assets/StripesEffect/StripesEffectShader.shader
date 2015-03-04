@@ -16,10 +16,14 @@
 			CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma glsl
 			#pragma fragmentoption ARB_precision_hint_fastest
 			#pragma exclude_renderers flash
-			#pragma target 3.0 
+			#pragma glsl
+
+			#ifdef SHADER_API_D3D9
+				#pragma target 3.0
+			#endif
+
 			#include "UnityCG.cginc"
 
 			float4x4 _FrustumCornersWPos;
@@ -29,11 +33,11 @@
 			float4 _MainTex_TexelSize;
 			float4 _BackgroundColor;
 
+			float _TexGranularity;
+			sampler2D _DataTex;
+
 			#define MAX_STRIPES 50
 			float _StripeNum;
-			float4 _StripesColor[MAX_STRIPES];
-			float4 _StripesCenter[MAX_STRIPES];
-			float4 _Stripes[MAX_STRIPES];
 
 			struct v2f
 			{
@@ -42,6 +46,13 @@
 				float2 uv_depth : TEXCOORD1;
 				float4 interpolatedRay : TEXCOORD2;
 			};
+
+			
+			//Decodes floats in range [-5000; 5000]
+			inline float RGBAToFloat(float4 rgba)
+			{
+				return (dot(rgba, float4(1.0, 1/255.0, 1/65025.0, 1/160581375.0)) - 0.5f)*10000.0;
+			}
 
 			v2f vert(appdata_img v)
 			{
@@ -69,33 +80,44 @@
 				float4 wsDir = dpth * input.interpolatedRay;
 				float4 wsPos = _CameraWPos + wsDir;
 
+				float fade;
 				float radius;
 				float size;
 				float dist;
+				float4 color;
 				bool isLit = false;
 				bool currentLit;
 				float alpha = 0.0f;
 
 				for(int i=0; i<_StripeNum; ++i)
 				{
-					radius = _Stripes[i].x;
-					size = _Stripes[i].y;
-					dist = distance(wsPos, float4(_StripesCenter[i].xyz, 1));
+					color = tex2Dlod(_DataTex, float4(_TexGranularity*i*7, 0, 0, 0));
+					
+					radius = RGBAToFloat(tex2Dlod(_DataTex, float4(_TexGranularity*(i*7 + 1), 0, 0, 0)));
+					size = RGBAToFloat(tex2Dlod(_DataTex, float4(_TexGranularity*(i*7 + 2), 0, 0, 0)));
+					fade = RGBAToFloat(tex2Dlod(_DataTex, float4(_TexGranularity*(i*7 + 3), 0, 0, 0)));
+
+					float4 center = float4(RGBAToFloat(tex2Dlod(_DataTex, float4(_TexGranularity*(i*7 + 4), 0, 0, 0))),
+										   RGBAToFloat(tex2Dlod(_DataTex, float4(_TexGranularity*(i*7 + 5), 0, 0, 0))),
+										   RGBAToFloat(tex2Dlod(_DataTex, float4(_TexGranularity*(i*7 + 6), 0, 0, 0))),
+										   1.0);
+
+					dist = distance(wsPos, center);
 
 					currentLit = false;
 					if(dist < radius - size)
 					{
 						isLit = true;
 						currentLit = true;
-						alpha = max(alpha, _Stripes[i].z);
+						alpha = max(alpha, fade);
 					}
 					else if(dist < radius && !currentLit)
 					{
-						return lerp(_BackgroundColor, _StripesColor[i], _Stripes[i].z);
+						return lerp(_BackgroundColor, color, fade);
 					}
 				}
 
-				if(isLit) 
+				if(isLit)
 				{
 					return lerp(_BackgroundColor, tex2D(_MainTex, input.uv), alpha);
 				}

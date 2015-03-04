@@ -17,8 +17,10 @@ public class StripesEffect : MonoBehaviour
 
 	public Material m_material;
 
-    private int m_maxStripeNum = 50;
+	//Never make it larger than 30
+    private int m_maxStripeNum = 30;
     private List<Stripe> m_stripes;
+    private Texture2D m_dataTex;
 
 	private void Awake()
 	{
@@ -26,6 +28,12 @@ public class StripesEffect : MonoBehaviour
 
 		camera.depthTextureMode |= DepthTextureMode.DepthNormals;
         camera.depthTextureMode |= DepthTextureMode.Depth;
+
+        m_dataTex = new Texture2D(256, 1);
+        m_dataTex.filterMode = FilterMode.Point;
+        m_dataTex.anisoLevel = 1;
+        m_dataTex.mipMapBias = 0;
+        m_dataTex.Apply();
 	}
 
     private void Update()
@@ -57,6 +65,9 @@ public class StripesEffect : MonoBehaviour
 
     public void AddStripe()
     {
+		if(m_stripes.Count >= m_maxStripeNum)
+			return;
+
         Stripe stripe = new Stripe();
         stripe.maxRadius = Random.Range(7.5f, 10.0f);
         stripe.speed = Random.Range(5.0f, 10.0f);
@@ -70,14 +81,37 @@ public class StripesEffect : MonoBehaviour
 
     private void SetStripesParameters()
     {
-        m_material.SetFloat("_StripeNum", m_stripes.Count);
-        for(int i=0; i<m_stripes.Count && i<m_maxStripeNum; ++i)
+		m_material.SetFloat("_StripeNum", m_stripes.Count);
+		
+        for(int i=0; i<m_stripes.Count && i<m_maxStripeNum; i++)
         {
-            m_material.SetVector("_StripesColor" + i.ToString(), m_stripes[i].color);
-            m_material.SetVector("_StripesCenter" + i.ToString(), m_stripes[i].center);
-            Vector4 properties = new Vector4(m_stripes[i].radius, m_stripes[i].size, m_stripes[i].fade);
-            m_material.SetVector("_Stripes" + i.ToString(), properties);
+			//Color
+            m_dataTex.SetPixel(i*7, 0, m_stripes[i].color);
+
+			//Radius
+			Color radius = FloatToRGBA(m_stripes[i].radius);
+			m_dataTex.SetPixel(i*7 + 1, 0, radius);
+
+			//Size
+			Color size = FloatToRGBA(m_stripes[i].size);
+			m_dataTex.SetPixel(i*7 + 2, 0, size);
+
+			//Fade
+			Color fade = FloatToRGBA(m_stripes[i].fade);
+			m_dataTex.SetPixel(i*7 + 3, 0, fade);
+
+			//Center
+			Color centerX = FloatToRGBA(m_stripes[i].center.x);
+			Color centerY = FloatToRGBA(m_stripes[i].center.y);
+			Color centerZ = FloatToRGBA(m_stripes[i].center.z);
+			m_dataTex.SetPixel(i*7 + 4, 0, centerX);
+			m_dataTex.SetPixel(i*7 + 5, 0, centerY);
+			m_dataTex.SetPixel(i*7 + 6, 0, centerZ);
         }
+        m_dataTex.Apply();
+		
+        m_material.SetFloat("_TexGranularity", 1.0f / 256.0f);
+        m_material.SetTexture("_DataTex", m_dataTex);
     }
 
     private void SetCameraParameters()
@@ -144,4 +178,24 @@ public class StripesEffect : MonoBehaviour
 		GL.End();
 		GL.PopMatrix();
 	}
+
+	//Encodes floats in range [-5000; 5000]
+	private Vector4 FloatToRGBA(float v)
+    {
+		v = v/10000.0f + 0.5f;
+        Vector4 enc = new Vector4(1.0f, 255.0f, 65025.0f, 160581375.0f);
+        enc *= v;
+
+        //Frac function
+        enc.x = enc.x - (int) enc.x;
+        enc.y = enc.y - (int) enc.y;
+        enc.z = enc.z - (int) enc.z;
+        enc.w = enc.w - (int) enc.w;
+
+        enc.x -= enc.y * 1.0f/255.0f;
+        enc.y -= enc.z * 1.0f/255.0f;
+        enc.z -= enc.w * 1.0f/255.0f;
+
+        return enc;
+    }
 }

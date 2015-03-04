@@ -26,6 +26,7 @@ public class MicrophoneAnalyzer : MonoBehaviour
 
             m_audioSource.loop = true;
             m_audioSource.Play();
+			m_audioSource.volume = 0.0f;
         }
         else
         {
@@ -46,7 +47,7 @@ public class MicrophoneAnalyzer : MonoBehaviour
         }
         sum /= m_spectrum.Length;
 
-        if(sum > m_threshold)
+        if(sum > m_threshold || Input.GetButtonDown("Fire1"))
         {
             m_stripes.AddStripe();
         }
