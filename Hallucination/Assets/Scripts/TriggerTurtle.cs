@@ -28,6 +28,14 @@ public class TriggerTurtle : MonoBehaviour {
             m_turtleAnims.animDown();
         }
     }
+    void Update()
+    {
+        if (m_Trigger_Type == Trigger_Type.appear && Input.GetKeyDown(KeyCode.Space))
+        {
+            m_turtleAnims.launchAnimation();
+            StartCoroutine("startExplo");
+        }
+    }
     IEnumerator startExplo()
     {
         yield return new WaitForSeconds(0.5f);
