@@ -183,8 +183,8 @@ public class vp_Input : MonoBehaviour
 		{
 			if(AxisKeys.Count == 0)
 			{
-				AddAxis("Vertical", KeyCode.W, KeyCode.S);
-				AddAxis("Horizontal", KeyCode.D, KeyCode.A);
+				AddAxis("Vertical", KeyCode.Z, KeyCode.S);
+				AddAxis("Horizontal", KeyCode.D, KeyCode.Q);
 			}
 		}
 		

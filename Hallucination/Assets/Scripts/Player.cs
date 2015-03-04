@@ -54,10 +54,10 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyUp("y"))
         {
-            Debug.Log(ObjectPool.instance._matrix.Count);
+            //Debug.Log(ObjectPool.instance._matrix.Count);
             foreach (ObjectPool.GridElement _t in ObjectPool.instance._matrix)
             {
-                Debug.Log(_t.mToString());
+                //Debug.Log(_t.mToString());
             }
         }
         if (Input.GetMouseButtonDown(0))
