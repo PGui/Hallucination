@@ -30,7 +30,7 @@ public class TriggerTurtle : MonoBehaviour {
     }
     void Update()
     {
-        if (m_Trigger_Type == Trigger_Type.appear && Input.GetKeyDown(KeyCode.Space))
+        if (m_Trigger_Type == Trigger_Type.appear && Input.GetKeyDown(KeyCode.N))
         {
             m_turtleAnims.launchAnimation();
             StartCoroutine("startExplo");
