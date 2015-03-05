@@ -17,13 +17,20 @@ public class StripesEffect : MonoBehaviour
 
 	public Material m_material;
 
-	//Never make it larger than 30
+	//Never make it larger than 30 (texture size issue with D3D9 rendering)
     private int m_maxStripeNum = 30;
     private List<Stripe> m_stripes;
     private Texture2D m_dataTex;
 
+	private float m_lastStripe = 0.0f;
+	private float m_stripeInterval = 0.3f;
+
+	private vp_FPPlayerEventHandler m_playerController;
+
 	private void Awake()
 	{
+		m_playerController = transform.parent.GetComponent<vp_FPPlayerEventHandler>();
+
         m_stripes = new List<Stripe>();
 
 		camera.depthTextureMode |= DepthTextureMode.DepthNormals;
@@ -38,6 +45,12 @@ public class StripesEffect : MonoBehaviour
 
     private void Update()
     {
+		Vector3 playerVel = m_playerController.Velocity.Get();
+		if(playerVel.magnitude > 1.0f)
+		{
+			AddStripe();
+		}
+
         int listCount = m_stripes.Count;
         for(int i=0; i<listCount; ++i)
         {
@@ -65,18 +78,23 @@ public class StripesEffect : MonoBehaviour
 
     public void AddStripe()
     {
-		if(m_stripes.Count >= m_maxStripeNum)
+		if(m_stripes.Count >= m_maxStripeNum ||
+		   Time.time - m_lastStripe <= m_stripeInterval)
+		{
 			return;
+		}
 
         Stripe stripe = new Stripe();
-        stripe.maxRadius = Random.Range(7.5f, 10.0f);
+        stripe.maxRadius = Random.Range(25.0f, 30.0f);
         stripe.speed = Random.Range(5.0f, 10.0f);
         stripe.radius = 0.0f;
         stripe.color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         stripe.size = Random.Range(0.2f, 1.0f);
         stripe.fade = 1.0f;
-        stripe.center = new Vector3(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f));
+        stripe.center = transform.position + new Vector3(Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f), Random.Range(-5.0f, 5.0f));
         m_stripes.Add(stripe);
+
+		m_lastStripe = Time.time;
     }
 
     private void SetStripesParameters()
