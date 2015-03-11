@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
         if(finishGame)
         {
             yield return new WaitForSeconds(1f);
-            this.transform.position = m_endRoom.position;
+            this.transform.position = m_endRoom.position + new Vector3(0f, 5f, 3f);
         }
     }
     public void TeleportToEnd ()
