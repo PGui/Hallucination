@@ -68,10 +68,6 @@ public class Corridor : MonoBehaviour {
             m_entered = true;
             m_player.SetCurrentLocation(this.instanceID, this);
 
-            if (m_player.m_corridorCollectionCounter == m_player.m_nbCorridorVictory)
-            {
-                m_player.m_victoryState = true;
-            }
             if (m_player.m_victoryState == false)
             {
                 if (this.m_typeCorridor.GetHashCode() == m_player.m_victoryPattern[m_player.m_corridorCollectionCounter] && m_player.m_corridorCollectionCounter < m_player.m_nbCorridorVictory)

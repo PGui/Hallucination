@@ -17,10 +17,12 @@ public class Player : MonoBehaviour
 
     private float duration = 1; // This will be your time in seconds.
     private float smoothness = 0.02f; // This will determine the smoothness of the lerp. Smaller values are smoother. Really it's the time between updates.
+    private Transform m_endRoom;
 
     void Start()
     {
         m_currentCorridorInstance = GameObject.Find("666").GetComponent<Corridor>();
+        m_endRoom = GameObject.Find("EndRoom").GetComponent<Transform>();
         m_currentCorridorInstance.m_triggers = m_currentCorridorInstance.GetComponentsInChildren<TriggerCorridor>();
         m_currentCorridorInstance.DisableTriggers();
         m_currentCorridor = m_currentCorridorInstance.GetInstanceID();
@@ -63,6 +65,14 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             displayMap();
+        }
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        if (m_corridorCollectionCounter == m_nbCorridorVictory)
+        {
+            TeleportToEnd();
         }
     }
     public int GetCurrentLocation()
@@ -124,7 +134,7 @@ public class Player : MonoBehaviour
             m_lineMap += "|\n";
         }
         m_mapTextArea.text = m_lineMap;
-        StartCoroutine("LerpColor");
+        StartCoroutine("LerpColor", false);
        /* if (m_mapTextArea.color == m_endFadeColor)
         {
             m_mapTextArea.color = m_beginFadeColor;
@@ -146,7 +156,7 @@ public class Player : MonoBehaviour
         }
         return "--";
     }
-    IEnumerator LerpColor()
+    IEnumerator LerpColor(bool finishGame = false)
     {
         float progress = 0; //This float will serve as the 3rd parameter of the lerp function.
         float increment = smoothness / duration; //The amount of change to apply.
@@ -157,5 +167,17 @@ public class Player : MonoBehaviour
             progress += increment;
             yield return new WaitForSeconds(smoothness);
         }
+        if(finishGame)
+        {
+            yield return new WaitForSeconds(1f);
+            this.transform.position = m_endRoom.position;
+        }
+    }
+    public void TeleportToEnd ()
+    {
+        m_corridorCollectionCounter++;
+        m_victoryState = true;
+        m_mapTextArea.text = "YOU FOUND THE ANSWER. TELEPORTING TO THE REWARD ROOM...";
+        StartCoroutine("LerpColor", true);
     }
 }

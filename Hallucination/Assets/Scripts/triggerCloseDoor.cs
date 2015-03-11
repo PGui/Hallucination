@@ -30,10 +30,10 @@ public class triggerCloseDoor : MonoBehaviour {
             if (time >= closeDuration)
             {
                 closeDoor = false;
+                Application.LoadLevel("Scene3FX");
             }
 
         }
-
 
         
 	}
