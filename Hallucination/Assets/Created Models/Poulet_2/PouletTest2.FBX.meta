@@ -1,0 +1,294 @@
+fileFormatVersion: 2
+guid: 075a38328570f6f4e92329ea82c15046
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Aile_1
+    100002: Aile_2
+    100004: Bec
+    100006: Bone004
+    100008: Bone007
+    100010: Corps
+    100012: Crete_1
+    100014: Crete_2
+    100016: Crete_3
+    100018: IK Chain001
+    100020: IK Chain002
+    100022: LJambe_1
+    100024: LJambe_1 1
+    100026: LJambe_2
+    100028: LJambe_2 1
+    100030: LPatte
+    100032: Oeil_1
+    100034: Oeil_2
+    100036: //RootNode
+    100038: RJambe_1
+    100040: RJambe_1 1
+    100042: RJambe_2
+    100044: RJambe_2 1
+    100046: Root
+    100048: RPatte
+    400000: Aile_1
+    400002: Aile_2
+    400004: Bec
+    400006: Bone004
+    400008: Bone007
+    400010: Corps
+    400012: Crete_1
+    400014: Crete_2
+    400016: Crete_3
+    400018: IK Chain001
+    400020: IK Chain002
+    400022: LJambe_1
+    400024: LJambe_1 1
+    400026: LJambe_2
+    400028: LJambe_2 1
+    400030: LPatte
+    400032: Oeil_1
+    400034: Oeil_2
+    400036: //RootNode
+    400038: RJambe_1
+    400040: RJambe_1 1
+    400042: RJambe_2
+    400044: RJambe_2 1
+    400046: Root
+    400048: RPatte
+    4300000: Corps
+    4300002: LPatte
+    4300004: RJambe_1
+    4300006: RPatte
+    4300008: RJambe_2
+    4300010: LJambe_2
+    4300012: LJambe_1
+    4300014: Aile_2
+    4300016: Bec
+    4300018: Crete_1
+    4300020: Crete_2
+    4300022: Crete_3
+    4300024: Oeil_1
+    4300026: Oeil_2
+    4300028: Aile_1
+    7400000: Take 001
+    7400002: Take 0010
+    9500000: //RootNode
+    13700000: Aile_1
+    13700002: Aile_2
+    13700004: Bec
+    13700006: Corps
+    13700008: Crete_1
+    13700010: Crete_2
+    13700012: Crete_3
+    13700014: LJambe_1
+    13700016: LJambe_2
+    13700018: LPatte
+    13700020: Oeil_1
+    13700022: Oeil_2
+    13700024: RJambe_1
+    13700026: RJambe_2
+    13700028: RPatte
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aile_1
+        weight: 1
+      - path: Aile_2
+        weight: 1
+      - path: Bec
+        weight: 1
+      - path: Corps
+        weight: 1
+      - path: Crete_1
+        weight: 1
+      - path: Crete_2
+        weight: 1
+      - path: Crete_3
+        weight: 1
+      - path: IK Chain001
+        weight: 1
+      - path: IK Chain002
+        weight: 1
+      - path: LJambe_1
+        weight: 1
+      - path: LJambe_2
+        weight: 1
+      - path: LPatte
+        weight: 1
+      - path: Oeil_1
+        weight: 1
+      - path: Oeil_2
+        weight: 1
+      - path: RJambe_1
+        weight: 1
+      - path: RJambe_2
+        weight: 1
+      - path: Root
+        weight: 1
+      - path: Root/LJambe_1 1
+        weight: 1
+      - path: Root/LJambe_1 1/LJambe_2 1
+        weight: 1
+      - path: Root/LJambe_1 1/LJambe_2 1/Bone004
+        weight: 1
+      - path: Root/RJambe_1 1
+        weight: 1
+      - path: Root/RJambe_1 1/RJambe_2 1
+        weight: 1
+      - path: Root/RJambe_1 1/RJambe_2 1/Bone007
+        weight: 1
+      - path: RPatte
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Take 0010
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Aile_1
+        weight: 1
+      - path: Aile_2
+        weight: 1
+      - path: Bec
+        weight: 1
+      - path: Corps
+        weight: 1
+      - path: Crete_1
+        weight: 1
+      - path: Crete_2
+        weight: 1
+      - path: Crete_3
+        weight: 1
+      - path: IK Chain001
+        weight: 1
+      - path: IK Chain002
+        weight: 1
+      - path: LJambe_1
+        weight: 1
+      - path: LJambe_2
+        weight: 1
+      - path: LPatte
+        weight: 1
+      - path: Oeil_1
+        weight: 1
+      - path: Oeil_2
+        weight: 1
+      - path: RJambe_1
+        weight: 1
+      - path: RJambe_2
+        weight: 1
+      - path: Root
+        weight: 1
+      - path: Root/LJambe_1 1
+        weight: 1
+      - path: Root/LJambe_1 1/LJambe_2 1
+        weight: 1
+      - path: Root/LJambe_1 1/LJambe_2 1/Bone004
+        weight: 1
+      - path: Root/RJambe_1 1
+        weight: 1
+      - path: Root/RJambe_1 1/RJambe_2 1
+        weight: 1
+      - path: Root/RJambe_1 1/RJambe_2 1/Bone007
+        weight: 1
+      - path: RPatte
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
