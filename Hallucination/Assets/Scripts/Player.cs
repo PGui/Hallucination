@@ -134,6 +134,7 @@ public class Player : MonoBehaviour
             m_lineMap += "|\n";
         }
         m_mapTextArea.text = m_lineMap;
+        if (m_victoryState) m_mapTextArea.text = "YOU FOUND THE ANSWER. TELEPORTING TO THE REWARD ROOM...";
         StartCoroutine("LerpColor", false);
        /* if (m_mapTextArea.color == m_endFadeColor)
         {
