@@ -1,6 +1,6 @@
 Projet créé à la base par Guillaume Pastor, Paul Gerst et Bastien Nanceau.
 Assets créés par moi-même avec 3DS MAX dans le dossier ASSET CREES d'autres assets ont été créés dans Unity via l'éditeur, 
 comme la pyramide.
-Je me suis occupé de la scène avec la pyramide ainsi que les caméras pour le trailer entre autre.
+Je me suis occupé de la scène avec la pyramide (scene 4) ainsi que les caméras pour le trailer entre autre.
 Fonctionne qu'avec la version 4.6 d'Unity.
 Trailer dans le dossier TRAILER GUILLAUME PASTOR.
